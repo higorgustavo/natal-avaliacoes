@@ -1,3 +1,10 @@
 from django.shortcuts import render
+from .models import Loja, Avaliacao
 
-# Create your views here.
+
+def listar_lojas(request):
+    lojas = Loja.objects.all()
+    context = {
+        'lojas': lojas
+    }
+    return render(request, 'index.html', context)

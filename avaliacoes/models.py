@@ -15,13 +15,12 @@ class Avaliacao(models.Model):
         ["Bom", "Bom"]
     ]
     loja = models.ForeignKey(Loja, on_delete=models.CASCADE)
-    avaliacao_cliente = models.CharField(max_length=25,
-                                         verbose_name="Avaliação",
-                                         choices=AVALIACAO_CHOICES)
+    avaliacao_cliente = models.CharField(max_length=25, verbose_name="Avaliação", choices=AVALIACAO_CHOICES)
+    quant_votos = models.IntegerField()
     data_avaliacao = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.loja.nome + " - " + self.avaliacao_cliente + " - " + str(self.data_avaliacao)
+        return self.loja.nome + "|" + self.avaliacao_cliente + "|" + str(self.quant_votos) + "|" + str(self.data_avaliacao)
 
     class Meta:
         verbose_name = "Avaliação"
