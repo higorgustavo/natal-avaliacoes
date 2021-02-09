@@ -1,0 +1,7 @@
+.idea/
+__pycache__
+.idea/workspace.xml
+local_settings.py
+/media
+/db.sqlite3
+/venv/
