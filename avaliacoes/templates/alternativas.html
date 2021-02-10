@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block titulo %} {{ loja.nome }} - Vote {% endblock %}
+
+{% block content %}
+    <h1>O que achou do nosso atendimento?</h1><br>
+    {% for alternativa in alternativas %}
+        <h3>{{ alternativa.nome_alternativa|upper }}</h3><br>
+    {% endfor %}
+{% endblock %}

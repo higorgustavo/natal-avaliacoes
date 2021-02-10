@@ -8,21 +8,28 @@ class Loja(models.Model):
         return self.nome
 
 
-class Avaliacao(models.Model):
-    AVALIACAO_CHOICES = [
-        ["Ruim", "Ruim"],
-        ["Normal", "Normal"],
-        ["Bom", "Bom"]
-    ]
+class Alternativa(models.Model):
     loja = models.ForeignKey(Loja, on_delete=models.CASCADE)
-    avaliacao_cliente = models.CharField(max_length=25, verbose_name="Avaliação", choices=AVALIACAO_CHOICES)
-    quant_votos = models.IntegerField()
-    data_avaliacao = models.DateField(auto_now=True)
+    nome_alternativa = models.CharField(max_length=25, verbose_name="Alternativa")
 
     def __str__(self):
-        return self.loja.nome + " | " + self.avaliacao_cliente + " | Votos:" + str(self.quant_votos) + " | " \
-               + str(self.data_avaliacao)
+        return self.nome_alternativa
 
     class Meta:
-        verbose_name = "Avaliação"
-        verbose_name_plural = "Avaliações"
+        verbose_name = "Alternativa"
+        verbose_name_plural = "Alternativas"
+        ordering = ['-id']
+
+
+class Voto(models.Model):
+    alternativa = models.ForeignKey(Alternativa, on_delete=models.CASCADE)
+    quant_votos = models.IntegerField()
+    data_voto = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.alternativa.loja.nome + " | " + self.alternativa.nome_alternativa + " | Votos: " + \
+               str(self.quant_votos) + " | " + str(self.data_voto)
+
+    class Meta:
+        verbose_name = "Voto"
+        verbose_name_plural = "Votos"
