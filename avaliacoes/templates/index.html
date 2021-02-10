@@ -5,7 +5,8 @@
 {% block content %}
     <h1>LOJAS</h1><br>
     {% for loja in lojas %}
-        <h3>{{ loja.nome }}</h3><br>
+        <a href="{% url 'opcoes_avaliacao' loja.id %}">
+            <h3>{{ loja.nome }}</h3><br>
+        </a>
     {% endfor %}
 {% endblock %}
-

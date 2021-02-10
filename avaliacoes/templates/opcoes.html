@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block titulo %} {{ loja.none }} - Vote {% endblock %}
+
+{% block content %}
+    <h1>O que achou do nosso atendimento?</h1><br>
+    {% for opcao in avaliacoes %}
+        <a href="{% url 'votar' opcao.id %}">
+            <h3>{{ opcao.avaliacao_cliente|upper }}</h3><br>
+        </a>
+    {% endfor %}
+{% endblock %}

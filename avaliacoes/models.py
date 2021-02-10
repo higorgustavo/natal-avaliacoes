@@ -20,7 +20,8 @@ class Avaliacao(models.Model):
     data_avaliacao = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.loja.nome + "|" + self.avaliacao_cliente + "|" + str(self.quant_votos) + "|" + str(self.data_avaliacao)
+        return self.loja.nome + " | " + self.avaliacao_cliente + " | Votos:" + str(self.quant_votos) + " | " \
+               + str(self.data_avaliacao)
 
     class Meta:
         verbose_name = "Avaliação"
