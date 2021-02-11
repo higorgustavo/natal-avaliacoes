@@ -13,7 +13,7 @@ class Alternativa(models.Model):
     nome_alternativa = models.CharField(max_length=25, verbose_name="Alternativa")
 
     def __str__(self):
-        return self.nome_alternativa
+        return self.nome_alternativa + " | " + self.loja.nome
 
     class Meta:
         verbose_name = "Alternativa"
@@ -23,7 +23,7 @@ class Alternativa(models.Model):
 
 class Voto(models.Model):
     alternativa = models.ForeignKey(Alternativa, on_delete=models.CASCADE)
-    quant_votos = models.IntegerField()
+    quant_votos = models.IntegerField(null=True, blank=True)
     data_voto = models.DateField(auto_now=True)
 
     def __str__(self):

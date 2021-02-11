@@ -11,7 +11,7 @@ def listar_lojas(request):
     return render(request, 'index.html', context)
 
 
-def opcoes_avaliacao(request, id):
+def listar_alternativas(request, id):
     loja = Loja.objects.get(pk=id)
     alternativas = Alternativa.objects.filter(loja=loja.id)
     context = {
@@ -22,20 +22,56 @@ def opcoes_avaliacao(request, id):
 
 
 def votar(request, id):
-    pass
+    alternativa = Alternativa.objects.get(pk=id)
 
+    voto, created = Voto.objects.get_or_create()
+
+    if created:
+        voto.alternativa_id = alternativa.id
+        voto.quant_votos = 1
+        return redirect('listar_lojas')
+
+    if voto.data_voto == date.today() and voto.alternativa_id == alternativa.id:
+        voto.quant_votos += 1
+        voto.save()
+        return redirect('listar_lojas')
+
+
+
+# if created:
+#     voto.alternativa = alternativa
+#     voto.quant_votos = 1
+#     voto.save()
+#     return redirect('listar_lojas')
+
+
+# Indo Certo
+# def votar(request, id):
+#     alternativa = Alternativa.objects.get(pk=id)
+#     voto, created = Voto.objects.get_or_create(
+#         alternativa_id=alternativa.id,
+#         quant_votos=1
+#     )
+#
+#     if voto.quant_votos == 1:
+#         if voto.data_voto == date.today():
+#             voto.quant_votos += 1
+#             voto.save()
+#         return redirect('listar_lojas')
+#
+#     return redirect('listar_lojas')
 
 # def votar(request, id):
-#     avaliacao = Avaliacao.objects.get(pk=id)
-#     if avaliacao.data_avaliacao != date.today():
-#         new_avaliacao, created = Avaliacao.objects.get_or_create(
-#             avaliacao_cliente=avaliacao.avaliacao_cliente,
-#             loja_id=avaliacao.loja_id,
-#             quant_votos=1
-#         )
-#         new_avaliacao.save()
-#         return redirect('listar_lojas')
-#     else:
-#         avaliacao.quant_votos += 1
-#         avaliacao.save()
-#         return redirect('listar_lojas')
+#     alternativa = Alternativa.objects.get(pk=id)
+#     v = 0
+#
+#     voto, created = Voto.objects.get_or_create(
+#         alternativa_id=alternativa.id,
+#         quant_votos=v
+#     )
+#
+#     if voto.alternativa_id == alternativa.id:
+#         if voto.data_voto == date.today():
+#             voto.quant_votos += 1
+#             voto.save()
+#     return redirect('listar_lojas')
