@@ -23,19 +23,14 @@ def listar_alternativas(request, id):
 
 def votar(request, id):
     alternativa = Alternativa.objects.get(pk=id)
+    voto, created = Voto.objects.get_or_create(alternativa_id=alternativa.id, data_voto=date.today())
 
-    voto, created = Voto.objects.get_or_create()
-
-    if created:
-        voto.alternativa_id = alternativa.id
-        voto.quant_votos = 1
-        return redirect('listar_lojas')
-
-    if voto.data_voto == date.today() and voto.alternativa_id == alternativa.id:
+    if voto.data_voto == date.today():
         voto.quant_votos += 1
         voto.save()
         return redirect('listar_lojas')
 
+    return redirect('listar_lojas')
 
 
 # if created:

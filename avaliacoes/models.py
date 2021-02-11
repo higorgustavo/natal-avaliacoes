@@ -18,12 +18,12 @@ class Alternativa(models.Model):
     class Meta:
         verbose_name = "Alternativa"
         verbose_name_plural = "Alternativas"
-        ordering = ['-id']
+        ordering = ['-nome_alternativa']
 
 
 class Voto(models.Model):
     alternativa = models.ForeignKey(Alternativa, on_delete=models.CASCADE)
-    quant_votos = models.IntegerField(null=True, blank=True)
+    quant_votos = models.IntegerField(default=0, null=True, blank=True)
     data_voto = models.DateField(auto_now=True)
 
     def __str__(self):
