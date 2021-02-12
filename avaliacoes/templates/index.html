@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 
-{% block titulo %} Avaliador - Lojas {% endblock %}
+{% block titulo %} Natal Pesquisa de Qualidade {% endblock %}
+
+{% block navbar %}
+    {% include 'statics/components/_navbar.html' %}
+{% endblock %}
 
 {% block content %}
-    <h1>LOJAS</h1><br>
+    <h1 class="titulo">LOJAS</h1>
     {% for loja in lojas %}
-        <a href="{% url 'opcoes_avaliacao' loja.id %}">
+        <a href="{% url 'listar_alternativas' loja.id %}">
             <h3>{{ loja.nome }}</h3><br>
         </a>
     {% endfor %}

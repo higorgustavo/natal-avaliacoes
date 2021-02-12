@@ -10,7 +10,9 @@ class Loja(models.Model):
 
 class Alternativa(models.Model):
     loja = models.ForeignKey(Loja, on_delete=models.CASCADE)
-    nome_alternativa = models.CharField(max_length=25, verbose_name="Alternativa")
+    nome_alternativa = models.CharField(max_length=50, verbose_name="Alternativa")
+    emoji = models.CharField(max_length=100, verbose_name="Código Emoji", null=True, blank=True)
+    # https://www.w3schools.com/charsets/ref_emoji.asp
 
     def __str__(self):
         return self.nome_alternativa + " | " + self.loja.nome
@@ -18,7 +20,7 @@ class Alternativa(models.Model):
     class Meta:
         verbose_name = "Alternativa"
         verbose_name_plural = "Alternativas"
-        ordering = ['-nome_alternativa']
+        ordering = ['nome_alternativa']
 
 
 class Voto(models.Model):

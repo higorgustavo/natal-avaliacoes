@@ -1,0 +1,37 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3 {
+    text-align: center;
+}
+
+.titulo {
+    margin: 10px 0;
+}
+
+.div-alternativas {
+    text-align: center;
+    border: solid 1px;
+    border-radius: 8px;
+    color: #000000;
+    -moz-transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+    margin-bottom: 15px;
+}
+
+.div-alternativas:hover {
+    opacity: 0.95;
+    -moz-transform: scale(1.1);
+	-webkit-transform: scale(1.1);
+	transform: scale(1.1);
+}
+
+a.link-voto:link {
+    text-decoration: none;
+}
+
+.alternativa{
+    font-size: 32px;
+}

@@ -3,6 +3,6 @@ from .views import *
 
 urlpatterns = [
     path('', listar_lojas, name='listar_lojas'),
-    path('alternativas/<int:id>/', listar_alternativas, name='opcoes_avaliacao'),
+    path('pesquisa-loja/<int:id>/', listar_alternativas, name='listar_alternativas'),
     path('voto/<int:id>/', votar, name='votar')
 ]
