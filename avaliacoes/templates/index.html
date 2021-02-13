@@ -9,7 +9,7 @@
 {% block content %}
     <h1 class="titulo">LOJAS</h1>
     {% for loja in lojas %}
-        <a href="{% url 'listar_alternativas' loja.id %}">
+        <a href="{% url 'listar_perguntas' loja.id %}">
             <h3>{{ loja.nome }}</h3><br>
         </a>
     {% endfor %}

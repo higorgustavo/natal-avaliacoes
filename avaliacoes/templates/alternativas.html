@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block titulo %} {{ loja.nome }} - Vote {% endblock %}
+{% block titulo %} {{ pergunta.loja.nome }} - Vote {% endblock %}
 
 {% block navbar %}
     {% include 'statics/components/_navbar.html' %}
 {% endblock %}
 
 {% block content %}
-    <h2 class="titulo">O que achou do nosso atendimento?</h2><br>
+    <h2 class="titulo">{{ pergunta.pergunta_texto }}</h2><br>
     <div class="container">
         <div class="row">
             {% for alternativa in alternativas %}

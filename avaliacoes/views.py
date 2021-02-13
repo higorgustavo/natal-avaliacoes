@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Loja, Alternativa, Voto
+from .models import Loja, Pergunta, Alternativa, Voto
 from datetime import date
 from django.contrib import messages
 
@@ -12,11 +12,21 @@ def listar_lojas(request):
     return render(request, 'index.html', context)
 
 
-def listar_alternativas(request, id):
+def listar_perguntas(request, id):
     loja = Loja.objects.get(pk=id)
-    alternativas = Alternativa.objects.filter(loja=loja.id)
+    perguntas = Pergunta.objects.filter(loja_id=loja.id)
     context = {
         'loja': loja,
+        'perguntas': perguntas
+    }
+    return render(request, 'perguntas.html', context)
+
+
+def listar_alternativas(request, id):
+    pergunta = Pergunta.objects.get(pk=id)
+    alternativas = Alternativa.objects.filter(pergunta_id=pergunta.id)
+    context = {
+        'pergunta': pergunta,
         'alternativas': alternativas
     }
     return render(request, 'alternativas.html', context)
@@ -30,7 +40,7 @@ def votar(request, id):
         voto.quant_votos += 1
         voto.save()
         messages.success(request, 'Obrigado por colaborar!')
-        return redirect('/pesquisa-loja/'+str(alternativa.loja_id))
+        return redirect('/pesquisa-loja/'+str(alternativa.pergunta_id))
 
     messages.success(request, 'Obrigado por colaborar!')
-    return redirect('/pesquisa-loja/'+str(alternativa.loja_id))
+    return redirect('/pesquisa-loja/'+str(alternativa.pergunta_id))
