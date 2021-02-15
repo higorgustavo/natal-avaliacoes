@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Loja, Pergunta, Alternativa, Voto
+from .forms import LojaForm, PerguntaForm, AlternativaForm
 from datetime import date
 from django.contrib import messages
 
@@ -9,7 +10,7 @@ def listar_lojas(request):
     context = {
         'lojas': lojas
     }
-    return render(request, 'index.html', context)
+    return render(request, 'pesquisa/index.html', context)
 
 
 def listar_perguntas(request, id):
@@ -19,7 +20,7 @@ def listar_perguntas(request, id):
         'loja': loja,
         'perguntas': perguntas
     }
-    return render(request, 'perguntas.html', context)
+    return render(request, 'pesquisa/perguntas.html', context)
 
 
 def listar_alternativas(request, id):
@@ -29,7 +30,7 @@ def listar_alternativas(request, id):
         'pergunta': pergunta,
         'alternativas': alternativas
     }
-    return render(request, 'alternativas.html', context)
+    return render(request, 'pesquisa/alternativas.html', context)
 
 
 def votar(request, id):
@@ -44,3 +45,30 @@ def votar(request, id):
 
     messages.success(request, 'Obrigado por colaborar!')
     return redirect('/pesquisa-loja/'+str(alternativa.pergunta_id))
+
+
+# Cadastros
+
+def cadastrar_loja(request):
+    lojas = Loja.objects.all()
+    if request.method == "GET":
+        form = LojaForm()
+        context = {
+            'lojas': lojas,
+            'form': form
+        }
+        return render(request, 'cadastros/loja_form.html', context)
+
+    elif request.method == "POST":
+        form = LojaForm(request.POST)
+        if form.is_valid():
+            loja = form.save(commit=False)
+            form.save()
+            messages.success(request, 'Loja cadastrada com Sucesso!')
+            return redirect('cadastrar_loja')
+
+        else:
+            context = {
+                'form': form
+            }
+            return render(request, 'cadastros/loja_form.html', context)

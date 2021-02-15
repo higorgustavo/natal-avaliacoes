@@ -25,11 +25,10 @@
     </div>
 {% endblock %}
 
-<div class="div-footer">
-    {% block footer %}
-        {% include 'statics/components/_footer.html' %}
-    {% endblock %}
-</div>
+{% block footer %}
+    {% include 'statics/components/_footer.html' %}
+{% endblock %}
+
 
 {% block scripts %}
     <script>

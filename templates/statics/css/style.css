@@ -54,3 +54,8 @@ a.link-voto:link {
     text-decoration: none;
     color: #000000;
 }
+
+
+.lojas-cadastradas {
+    margin: 20px auto;
+}

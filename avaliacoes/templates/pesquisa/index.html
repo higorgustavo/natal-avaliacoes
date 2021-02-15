@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="titulo">LOJAS</h1>
+    <h1 class="titulo">Lojas</h1>
     {% for loja in lojas %}
         <a href="{% url 'listar_perguntas' loja.id %}">
             <h3>{{ loja.nome }}</h3><br>

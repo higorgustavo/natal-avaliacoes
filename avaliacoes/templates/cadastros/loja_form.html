@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Formulário - Loja {% endblock %}
+
+{% block navbar %}
+    {% include 'statics/components/_navbar.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <div class="card lojas-cadastradas">
+                    <h4 class="card-header">Nova Loja</h4>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form.as_p }}
+                            </div>
+                            <div class="div-button">
+                                <button type="submit" class="btn btn-primary">
+                                    Cadastrar
+                                </button>
+                                <a class="btn btn-secondary" href="{% url 'listar_lojas' %}">
+                                    Cancelar
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <h1 class="lojas-cadastradas">Lojas Cadastradas</h1>
+                {% for loja in lojas %}
+                    <h4>{{ loja.nome }}</h4>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
