@@ -26,16 +26,45 @@
                                     Cancelar
                                 </a>
                             </div>
+                            <div class="titulo">
+                                {% for message in messages %}
+                                    <div class="alert alert-success" id="alert" role="alert">
+                                        <h3 class="message">{{ message }}</h3>
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="col-sm">
-                <h1 class="lojas-cadastradas">Lojas Cadastradas</h1>
-                {% for loja in lojas %}
-                    <h4>{{ loja.nome }}</h4>
-                {% endfor %}
+                <div class="card lojas-cadastradas">
+                    <h4 class="card-header">Lojas Cadastradas</h4>
+                    <div class="card-body">
+                        {% for loja in lojas %}
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <h5>{{ loja.nome }}
+                                        <a href="#"><span class="material-icons icon delete-color">delete</span></a>
+                                        <a href="#"> <span style="" class="material-icons icon edit-color">edit</span></a>
+                                    </h5>
+                                </li>
+                            </ul>
+                            <th></th>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $().ready(function () {
+            setTimeout(function () {
+                $('#alert').hide(); // "foo" é o id do elemento que seja manipular.
+            }, 3000); // O valor é representado em milisegundos.
+        });
+    </script>
 {% endblock %}
