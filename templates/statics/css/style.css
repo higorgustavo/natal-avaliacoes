@@ -59,3 +59,21 @@ a.link-voto:link {
 .lojas-cadastradas {
     margin: 20px auto;
 }
+
+.text-icon {
+    vertical-align: bottom;
+}
+
+
+.icon {
+  margin: 3px;
+  float: right;
+}
+
+.edit-color {
+  color: #13c43f;
+}
+
+.delete-color {
+  color: #db1e47;
+}
