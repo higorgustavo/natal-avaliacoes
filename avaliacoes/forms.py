@@ -17,18 +17,15 @@ class LojaForm(forms.ModelForm):
 class PerguntaForm(forms.ModelForm):
     class Meta:
         model = Pergunta
-        fields = {'loja', 'pergunta_texto', 'isAtivo'}
+        fields = '__all__'
         widgets = {
             'loja': forms.Select(attrs={
                 'class': 'form-control'
             }),
             'pergunta_texto': forms.Textarea(attrs={
                 'class': 'form-control',
-                'row': '3'
+                'rows': '3'
             }),
-            'isAtivo': forms.CheckboxInput(attrs={
-                'class': 'form-check-input'
-            })
         }
 
 
@@ -39,10 +36,10 @@ class AlternativaForm(forms.ModelForm):
         widgets = {
             'nome_alternativa': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Digite a pergunta'
+                'placeholder': 'Digite a alternativa'
             }),
             'emoji': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Cole o emoji'
+                'placeholder': 'Cole o emoji da alternativa'
             })
         }

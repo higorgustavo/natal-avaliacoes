@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Cadastro de Perguntas {% endblock %}
+
+{% block navbar %}
+    {% include 'components/_navbar.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <div class="card lojas-cadastradas">
+                    <h4 class="card-header">Nova Pergunta</h4>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form_p.as_p }}
+                                {{ form_a.as_p }}
+                            </div>
+                            <div class="div-button">
+                                <button type="submit" class="btn btn-primary">
+                                    Cadastrar
+                                </button>
+                                <a class="btn btn-secondary" href="{% url 'listar_lojas' %}">
+                                    Cancelar
+                                </a>
+                            </div>
+                            <div class="titulo">
+                                {% for message in messages %}
+                                    <div class="alert alert-success" id="alert" role="alert">
+                                        <h3 class="message">{{ message }}</h3>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

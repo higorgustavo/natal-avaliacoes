@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Loja, Pergunta, Alternativa, Voto
 from .forms import LojaForm, PerguntaForm, AlternativaForm
+from django.forms import inlineformset_factory
 from datetime import date
 from django.contrib import messages
 
@@ -57,7 +58,7 @@ def cadastrar_loja(request):
             'lojas': lojas,
             'form': form
         }
-        return render(request, 'cadastros/loja_form.html', context)
+        return render(request, 'loja/loja_form.html', context)
 
     elif request.method == "POST":
         form = LojaForm(request.POST)
@@ -71,4 +72,46 @@ def cadastrar_loja(request):
             context = {
                 'form': form
             }
-            return render(request, 'cadastros/loja_form.html', context)
+            return render(request, 'loja/loja_form.html', context)
+
+
+# Perguntas e Alternativas
+def cadastrar_pergunta(request):
+    if request.method == "GET":
+        form_p = PerguntaForm()
+        form_alternativa_factory = inlineformset_factory(Pergunta, Alternativa, form=AlternativaForm, extra=1)
+        form_a = form_alternativa_factory()
+
+        context = {
+            'form_p': form_p,
+            'form_a': form_a,
+        }
+        return render(request, 'pergunta/create_pergunta.html', context)
+
+    elif request.method == "POST":
+        form_p = PerguntaForm(request.POST or None)
+        form_alternativa_factory = inlineformset_factory(Pergunta, Alternativa, form=AlternativaForm)
+        form_a = form_alternativa_factory(request.POST or None)
+
+        if form_p.is_valid() and form_a.is_valid():
+            pergunta = form_p.save(commit=False)
+            form_a.instance = pergunta
+            form_a.save()
+            return redirect('listar_lojas')
+
+        else:
+            context = {
+                'form_p': form_p,
+                'form_a': form_a,
+            }
+            return render(request, 'pergunta/create_pergunta.html', context)
+
+
+
+
+
+
+
+
+
+
