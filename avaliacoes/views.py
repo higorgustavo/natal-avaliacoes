@@ -42,10 +42,10 @@ def votar(request, id):
         voto.quant_votos += 1
         voto.save()
         messages.success(request, 'Obrigado por colaborar!')
-        return redirect('/pesquisa-loja/'+str(alternativa.pergunta_id))
+        return redirect('/pergunta/'+str(alternativa.pergunta_id)+'/alternativas')
 
     messages.success(request, 'Obrigado por colaborar!')
-    return redirect('/pesquisa-loja/'+str(alternativa.pergunta_id))
+    return redirect('/pergunta/'+str(alternativa.pergunta_id)+'/alternativas')
 
 
 # Cadastros
@@ -94,7 +94,7 @@ def cadastrar_pergunta(request):
         form_a = form_alternativa_factory(request.POST or None)
 
         if form_p.is_valid() and form_a.is_valid():
-            pergunta = form_p.save(commit=False)
+            pergunta = form_p.save()
             form_a.instance = pergunta
             form_a.save()
             return redirect('listar_lojas')
@@ -105,13 +105,3 @@ def cadastrar_pergunta(request):
                 'form_a': form_a,
             }
             return render(request, 'pergunta/create_pergunta.html', context)
-
-
-
-
-
-
-
-
-
-

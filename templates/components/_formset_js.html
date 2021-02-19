@@ -1,0 +1,11 @@
+<script type="text/javascript">
+    $(function () {
+        $('.inline-alternativa').formset({
+            prefix: '{{ form_a.prefix }}',
+            addText: 'Adicionar Nova Alternativa',
+            deleteText: 'Remover esta Alternativa',
+            addCssClass: 'btn btn-outline-info add-alternativa',
+            deleteCssClass: 'badge badge-danger'
+        });
+    })
+</script>

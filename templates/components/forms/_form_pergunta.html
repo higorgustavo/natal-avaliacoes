@@ -1,0 +1,11 @@
+{% csrf_token %}
+<div class="form-group">
+    {{ form_p.as_p }}
+    {{ form_a.management_form }}
+    {% for f_a in form_a %}
+        <div class="inline-alternativa">
+            <hr>
+            {{ f_a.as_p }}
+        </div>
+    {% endfor %}
+</div>

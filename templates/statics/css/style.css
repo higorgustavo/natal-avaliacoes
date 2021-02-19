@@ -75,5 +75,9 @@ a.link-voto:link {
 }
 
 .delete-color {
-  color: #db1e47;
+  color: red;
+}
+
+.add-alternativa {
+    margin-top: 15px;
 }

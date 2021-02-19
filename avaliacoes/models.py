@@ -26,7 +26,7 @@ class Pergunta(models.Model):
 class Alternativa(models.Model):
     pergunta = models.ForeignKey(Pergunta, on_delete=models.CASCADE)
     nome_alternativa = models.CharField(max_length=50, verbose_name="Alternativa")
-    emoji = models.CharField(max_length=100, verbose_name="Código Emoji", null=True, blank=True)
+    emoji = models.CharField(max_length=100, verbose_name="Emoji", null=True, blank=True)
     # https://www.w3schools.com/charsets/ref_emoji.asp
 
     def __str__(self):
