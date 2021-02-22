@@ -29,13 +29,6 @@
     {% include 'components/_footer.html' %}
 {% endblock %}
 
-
 {% block scripts %}
-    <script>
-        $().ready(function () {
-            setTimeout(function () {
-                $('#alert').hide(); // "foo" é o id do elemento que seja manipular.
-            }, 3000); // O valor é representado em milisegundos.
-        });
-    </script>
+    {% include 'components/_alert_js.html' %}
 {% endblock %}

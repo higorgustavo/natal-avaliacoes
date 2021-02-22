@@ -42,14 +42,13 @@ def votar(request, id):
         voto.quant_votos += 1
         voto.save()
         messages.success(request, 'Obrigado por colaborar!')
-        return redirect('/pergunta/'+str(alternativa.pergunta_id)+'/alternativas')
+        return redirect('/pergunta/' + str(alternativa.pergunta_id) + '/alternativas')
 
     messages.success(request, 'Obrigado por colaborar!')
-    return redirect('/pergunta/'+str(alternativa.pergunta_id)+'/alternativas')
+    return redirect('/pergunta/' + str(alternativa.pergunta_id) + '/alternativas')
 
 
 # Cadastros
-
 def cadastrar_loja(request):
     lojas = Loja.objects.all()
     if request.method == "GET":
@@ -76,6 +75,14 @@ def cadastrar_loja(request):
 
 
 # Perguntas e Alternativas
+def listar_perguntas_gerenciar(request):
+    perguntas = Pergunta.objects.all()
+    context = {
+        'perguntas': perguntas
+    }
+    return render(request, 'pergunta/list_perguntas.html', context)
+
+
 def cadastrar_pergunta(request):
     if request.method == "GET":
         form_p = PerguntaForm()
@@ -97,7 +104,8 @@ def cadastrar_pergunta(request):
             pergunta = form_p.save()
             form_a.instance = pergunta
             form_a.save()
-            return redirect('listar_lojas')
+            messages.success(request, 'Pergunta cadastrada com sucesso!')
+            return redirect('listar_perguntas_gerenciar')
 
         else:
             context = {
@@ -105,3 +113,58 @@ def cadastrar_pergunta(request):
                 'form_a': form_a,
             }
             return render(request, 'pergunta/create_pergunta.html', context)
+
+
+def editar_pergunta(request, id):
+    if request.method == "GET":
+        pergunta = Pergunta.objects.get(pk=id)
+        if pergunta is None:
+            return redirect('listar_lojas')
+        form_p = PerguntaForm(instance=pergunta)
+
+        form_alternativa_factory = inlineformset_factory(Pergunta, Alternativa, form=AlternativaForm, extra=0)
+        form_a = form_alternativa_factory(instance=pergunta)
+
+        context = {
+            'pergunta': pergunta,
+            'form_p': form_p,
+            'form_a': form_a,
+        }
+        return render(request, 'pergunta/edit_pergunta.html', context)
+
+    elif request.method == "POST":
+        pergunta = Pergunta.objects.get(pk=id)
+        if pergunta is None:
+            return redirect('listar_perguntas_gerenciar')
+        form_p = PerguntaForm(request.POST or None, instance=pergunta)
+
+        form_alternativa_factory = inlineformset_factory(Pergunta, Alternativa, form=AlternativaForm)
+        form_a = form_alternativa_factory(request.POST or None, instance=pergunta)
+
+        if form_p.is_valid() and form_a.is_valid():
+            pergunta_atualizada = form_p.save()
+            form_a.instance = pergunta_atualizada
+            form_a.save()
+
+            messages.success(request, 'Pergunta atualizada com sucesso!')
+            return redirect('listar_perguntas_gerenciar')
+
+        context = {
+            'pergunta': pergunta,
+            'form_p': form_p,
+            'form_a': form_a,
+        }
+        return render(request, 'pergunta/edit_pergunta.html', context)
+
+
+def deletar_pergunta(request, id):
+    pergunta = Pergunta.objects.get(pk=id)
+    if request.method == "POST":
+        pergunta.delete()
+        messages.success(request, 'Pergunta excluída com sucesso!')
+        return redirect('listar_perguntas_gerenciar')
+
+    context = {
+        'pergunta': pergunta
+    }
+    return render(request, 'pergunta/delete_pergunta.html', context)

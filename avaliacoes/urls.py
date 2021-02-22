@@ -9,5 +9,8 @@ urlpatterns = [
 
     # CRUD
     path('loja/', cadastrar_loja, name='cadastrar_loja'),
-    path('pergunta/', cadastrar_pergunta, name='cadastrar_pergunta'),
+    path('perguntas/', listar_perguntas_gerenciar, name='listar_perguntas_gerenciar'),
+    path('pergunta/add', cadastrar_pergunta, name='cadastrar_pergunta'),
+    path('pergunta/<int:id>/editar', editar_pergunta, name='editar_pergunta'),
+    path('pergunta/<int:id>/deletar', deletar_pergunta, name='deletar_pergunta'),
 ]
