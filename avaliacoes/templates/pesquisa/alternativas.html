@@ -3,7 +3,7 @@
 {% block titulo %} {{ pergunta.loja.nome }} - Vote {% endblock %}
 
 {% block content %}
-    <h2 class="titulo">{{ pergunta.pergunta_texto }}</h2><br>
+    <h2 class="titulo">{{ pergunta.pergunta_texto|upper }}</h2><br>
     <div class="container">
         <div class="row">
             {% for alternativa in alternativas %}

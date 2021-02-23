@@ -10,7 +10,7 @@
     <h1 class="titulo">Perguntas - {{ loja.nome }}</h1>
     {% for pergunta in perguntas %}
         <a href="{% url 'listar_alternativas' pergunta.id %}">
-            <h3>{{ pergunta.pergunta_texto }} | {{ pergunta.data_pergunta|date:"d/m/Y" }} </h3><br>
+            <h3>{{ pergunta.pergunta_texto|upper }} | {{ pergunta.data_pergunta|date:"d/m/Y" }} </h3><br>
         </a>
     {% endfor %}
 {% endblock %}
