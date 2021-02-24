@@ -13,10 +13,10 @@
                 <h2 class="message">{{ message }}</h2>
             </div>
         {% endfor %}
+        <h4 class="titulo">Perguntas</h4>
         <div class="card lojas-cadastradas">
             <h4 class="card-header">
-                Perguntas
-                <a href="{% url 'cadastrar_pergunta' %}" class="">
+                <a href="{% url 'cadastrar_pergunta' %}" class="btn btn-info">
                     Adicionar Pergunta
                 </a>
             </h4>
