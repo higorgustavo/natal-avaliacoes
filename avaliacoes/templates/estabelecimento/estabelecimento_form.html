@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block titulo %} Formulário - Loja {% endblock %}
+{% block titulo %} Formulário - Estabeleciomento {% endblock %}
 
 {% block navbar %}
     {% include 'components/_navbar.html' %}
@@ -16,18 +16,18 @@
         <div class="row">
             <div class="col-sm">
                 <div class="card lojas-cadastradas">
-                    <h4 class="card-header">Nova Loja</h4>
+                    <h4 class="card-header">Novo Estabeleciomento</h4>
                     <div class="card-body">
                         <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group">
-                                {{ form.as_p }}
+                                <h5>{{ form.as_p }}</h5>
                             </div>
                             <div class="div-button">
                                 <button type="submit" class="btn btn-primary">
                                     Cadastrar
                                 </button>
-                                <a class="btn btn-secondary" href="{% url 'listar_lojas' %}">
+                                <a class="btn btn-secondary" href="{% url 'listar_estabeleciomentos' %}">
                                     Cancelar
                                 </a>
                             </div>
@@ -37,15 +37,18 @@
             </div>
             <div class="col-sm">
                 <div class="card lojas-cadastradas">
-                    <h4 class="card-header">Lojas Cadastradas</h4>
+                    <h4 class="card-header">Estabeleciomentos Cadastradas</h4>
                     <div class="card-body">
-                        {% for loja in lojas %}
+                        {% for estabelecimento in estabelecimentos %}
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">
-                                    <h5>{{ loja.nome }}
-                                        <a href="#"><span class="material-icons icon delete-color">delete</span></a>
-                                        <a href="#"> <span style=""
-                                                           class="material-icons icon edit-color">edit</span></a>
+                                    <h5>{{ estabelecimento.nome }}
+                                        <a href="{% url 'deletar_estabelecimento' estabelecimento.id %}">
+                                            <span class="material-icons icon delete-color">delete</span>
+                                        </a>
+                                        <a href="{% url 'editar_estabelecimento' estabelecimento.id %}">
+                                            <span class="material-icons icon edit-color">edit</span>
+                                        </a>
                                     </h5>
                                 </li>
                             </ul>

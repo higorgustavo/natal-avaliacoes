@@ -1,35 +1,35 @@
 from django.shortcuts import render, redirect
-from .models import Loja, Pergunta, Alternativa, Voto
-from .forms import LojaForm, PerguntaForm, AlternativaForm
+from .models import Estabelecimento, Enquente, Alternativa, Voto
+from .forms import EstabelecimentoForm, EnqueteForm, AlternativaForm
 from django.forms import inlineformset_factory
 from datetime import date
 from django.contrib import messages
-from .filters import PerguntaFilter
+from .filters import EnqueteFilter
 
 
-def listar_lojas(request):
-    lojas = Loja.objects.all()
+def listar_estabeleciomentos(request):
+    estabeleciomentos = Estabelecimento.objects.all()
     context = {
-        'lojas': lojas
+        'estabeleciomentos': estabeleciomentos
     }
     return render(request, 'pesquisa/index.html', context)
 
 
-def listar_perguntas(request, id):
-    loja = Loja.objects.get(pk=id)
-    perguntas = Pergunta.objects.filter(loja_id=loja.id)
+def listar_enquetes(request, id):
+    estabelecimento = Estabelecimento.objects.get(pk=id)
+    enquetes = Enquente.objects.filter(estabelecimento_id=estabelecimento.id)
     context = {
-        'loja': loja,
-        'perguntas': perguntas
+        'estabelecimento': estabelecimento,
+        'enquetes': enquetes
     }
-    return render(request, 'pesquisa/perguntas.html', context)
+    return render(request, 'pesquisa/enquetes.html', context)
 
 
 def listar_alternativas(request, id):
-    pergunta = Pergunta.objects.get(pk=id)
-    alternativas = Alternativa.objects.filter(pergunta_id=pergunta.id)
+    enquete = Enquente.objects.get(pk=id)
+    alternativas = Alternativa.objects.filter(enquete_id=enquete.id)
     context = {
-        'pergunta': pergunta,
+        'enquete': enquete,
         'alternativas': alternativas
     }
     return render(request, 'pesquisa/alternativas.html', context)
@@ -43,132 +43,160 @@ def votar(request, id):
         voto.quant_votos += 1
         voto.save()
         messages.success(request, 'Obrigado por colaborar!')
-        return redirect('/pergunta/' + str(alternativa.pergunta_id) + '/alternativas')
+        return redirect('/enquete/' + str(alternativa.enquete_id) + '/alternativas')
 
     messages.success(request, 'Obrigado por colaborar!')
-    return redirect('/pergunta/' + str(alternativa.pergunta_id) + '/alternativas')
+    return redirect('/enquete/' + str(alternativa.enquete_id) + '/alternativas')
 
 
 # Cadastros
-def cadastrar_loja(request):
-    lojas = Loja.objects.all()
+def cadastrar_estabelecimento(request):
+    estabelecimentos = Estabelecimento.objects.all()
     if request.method == "GET":
-        form = LojaForm()
+        form = EstabelecimentoForm()
         context = {
-            'lojas': lojas,
+            'estabelecimentos': estabelecimentos,
             'form': form
         }
-        return render(request, 'loja/loja_form.html', context)
+        return render(request, 'estabelecimento/estabelecimento_form.html', context)
 
     elif request.method == "POST":
-        form = LojaForm(request.POST)
+        form = EstabelecimentoForm(request.POST)
         if form.is_valid():
-            loja = form.save(commit=False)
             form.save()
-            messages.success(request, 'Loja cadastrada com Sucesso!')
-            return redirect('cadastrar_loja')
+            messages.success(request, 'Estabelecimento cadastrado com Sucesso!')
+            return redirect('cadastrar_estabelecimento')
 
         else:
             context = {
                 'form': form
             }
-            return render(request, 'loja/loja_form.html', context)
+            return render(request, 'estabelecimento/estabelecimento_form.html', context)
+
+
+def editar_estabelecimento(request, id):
+    estabelecimento = Estabelecimento.objects.get(pk=id)
+    form = EstabelecimentoForm(instance=estabelecimento)
+    if request.method == "POST":
+        form = EstabelecimentoForm(request.POST, instance=estabelecimento)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Estabelecimento atualizado com sucesso!')
+            return redirect('cadastrar_estabelecimento')
+
+    context = {
+        'form': form
+    }
+    return render(request, 'estabelecimento/edit_estabelecimento.html', context)
+
+
+def deletar_estabelecimento(request, id):
+    estabelecimento = Estabelecimento.objects.get(pk=id)
+    if request.method == "POST":
+        estabelecimento.delete()
+        messages.success(request, 'Estabelecimento deletado com sucesso!')
+        return redirect('cadastrar_estabelecimento')
+
+    context = {
+        'estabelecimento': estabelecimento
+    }
+    return render(request, 'estabelecimento/delete_estabelecimento.html', context)
 
 
 # Perguntas e Alternativas
-def listar_perguntas_gerenciar(request):
-    perguntas = Pergunta.objects.all()
-    pergunta_filter = PerguntaFilter(request.GET, queryset=perguntas)
-    perguntas = pergunta_filter.qs
+def gerenciar_lista_esquentes(request):
+    enquetes = Enquente.objects.all()
+    enquete_filter = EnqueteFilter(request.GET, queryset=enquetes)
+    enquetes = enquete_filter.qs
     context = {
-        'perguntas': perguntas,
-        'pergunta_filter': pergunta_filter
+        'enquetes': enquetes,
+        'enquete_filter': enquete_filter
     }
-    return render(request, 'pergunta/list_perguntas.html', context)
+    return render(request, 'enquete/list_enquetes.html', context)
 
 
-def cadastrar_pergunta(request):
+def cadastrar_enquete(request):
     if request.method == "GET":
-        form_p = PerguntaForm()
-        form_alternativa_factory = inlineformset_factory(Pergunta, Alternativa, form=AlternativaForm, extra=1)
+        form_e = EnqueteForm()
+        form_alternativa_factory = inlineformset_factory(Enquente, Alternativa, form=AlternativaForm, extra=1)
         form_a = form_alternativa_factory()
 
         context = {
-            'form_p': form_p,
+            'form_e': form_e,
             'form_a': form_a,
         }
-        return render(request, 'pergunta/create_pergunta.html', context)
+        return render(request, 'enquete/create_enquete.html', context)
 
     elif request.method == "POST":
-        form_p = PerguntaForm(request.POST or None)
-        form_alternativa_factory = inlineformset_factory(Pergunta, Alternativa, form=AlternativaForm)
+        form_e = EnqueteForm(request.POST or None)
+        form_alternativa_factory = inlineformset_factory(Enquente, Alternativa, form=AlternativaForm)
         form_a = form_alternativa_factory(request.POST or None)
 
-        if form_p.is_valid() and form_a.is_valid():
-            pergunta = form_p.save()
-            form_a.instance = pergunta
+        if form_e.is_valid() and form_a.is_valid():
+            enquete = form_e.save()
+            form_a.instance = enquete
             form_a.save()
-            messages.success(request, 'Pergunta cadastrada com sucesso!')
-            return redirect('listar_perguntas_gerenciar')
+            messages.success(request, 'Enquete cadastrada com sucesso!')
+            return redirect('gerenciar_lista_esquentes')
 
         else:
             context = {
-                'form_p': form_p,
+                'form_e': form_e,
                 'form_a': form_a,
             }
-            return render(request, 'pergunta/create_pergunta.html', context)
+            return render(request, 'enquete/create_enquete.html', context)
 
 
-def editar_pergunta(request, id):
+def editar_enquete(request, id):
     if request.method == "GET":
-        pergunta = Pergunta.objects.get(pk=id)
-        if pergunta is None:
-            return redirect('listar_lojas')
-        form_p = PerguntaForm(instance=pergunta)
+        enquete = Enquente.objects.get(pk=id)
+        if enquete is None:
+            return redirect('gerenciar_lista_esquentes')
+        form_e = EnqueteForm(instance=enquete)
 
-        form_alternativa_factory = inlineformset_factory(Pergunta, Alternativa, form=AlternativaForm, extra=0)
-        form_a = form_alternativa_factory(instance=pergunta)
+        form_alternativa_factory = inlineformset_factory(Enquente, Alternativa, form=AlternativaForm, extra=0)
+        form_a = form_alternativa_factory(instance=enquete)
 
         context = {
-            'pergunta': pergunta,
-            'form_p': form_p,
+            'enquete': enquete,
+            'form_e': form_e,
             'form_a': form_a,
         }
-        return render(request, 'pergunta/edit_pergunta.html', context)
+        return render(request, 'enquete/edit_enquete.html', context)
 
     elif request.method == "POST":
-        pergunta = Pergunta.objects.get(pk=id)
-        if pergunta is None:
-            return redirect('listar_perguntas_gerenciar')
-        form_p = PerguntaForm(request.POST or None, instance=pergunta)
+        enquete = Enquente.objects.get(pk=id)
+        if enquete is None:
+            return redirect('gerenciar_lista_esquentes')
+        form_e = EnqueteForm(request.POST or None, instance=enquete)
 
-        form_alternativa_factory = inlineformset_factory(Pergunta, Alternativa, form=AlternativaForm)
-        form_a = form_alternativa_factory(request.POST or None, instance=pergunta)
+        form_alternativa_factory = inlineformset_factory(Enquente, Alternativa, form=AlternativaForm)
+        form_a = form_alternativa_factory(request.POST or None, instance=enquete)
 
-        if form_p.is_valid() and form_a.is_valid():
-            pergunta_atualizada = form_p.save()
-            form_a.instance = pergunta_atualizada
+        if form_e.is_valid() and form_a.is_valid():
+            enquete_atualizada = form_e.save()
+            form_a.instance = enquete_atualizada
             form_a.save()
 
-            messages.success(request, 'Pergunta atualizada com sucesso!')
-            return redirect('listar_perguntas_gerenciar')
+            messages.success(request, 'Enquete atualizada com sucesso!')
+            return redirect('gerenciar_lista_esquentes')
 
         context = {
-            'pergunta': pergunta,
-            'form_p': form_p,
+            'enquete': enquete,
+            'form_e': form_e,
             'form_a': form_a,
         }
-        return render(request, 'pergunta/edit_pergunta.html', context)
+        return render(request, 'enquete/edit_enquete.html', context)
 
 
-def deletar_pergunta(request, id):
-    pergunta = Pergunta.objects.get(pk=id)
+def deletar_enquete(request, id):
+    enquete = Enquente.objects.get(pk=id)
     if request.method == "POST":
-        pergunta.delete()
-        messages.success(request, 'Pergunta excluída com sucesso!')
-        return redirect('listar_perguntas_gerenciar')
+        enquete.delete()
+        messages.success(request, 'Enquete excluída com sucesso!')
+        return redirect('gerenciar_lista_esquentes')
 
     context = {
-        'pergunta': pergunta
+        'enquete': enquete
     }
-    return render(request, 'pergunta/delete_pergunta.html', context)
+    return render(request, 'enquete/delete_enquete.html', context)

@@ -1,28 +1,28 @@
 from django import forms
-from .models import Loja, Pergunta, Alternativa
+from .models import Estabelecimento, Enquente, Alternativa
 
 
-class LojaForm(forms.ModelForm):
+class EstabelecimentoForm(forms.ModelForm):
     class Meta:
-        model = Loja
+        model = Estabelecimento
         fields = '__all__'
         widgets = {
             'nome': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Nome da Loja'
+                'placeholder': 'Nome do Estabelecimento'
             })
         }
 
 
-class PerguntaForm(forms.ModelForm):
+class EnqueteForm(forms.ModelForm):
     class Meta:
-        model = Pergunta
+        model = Enquente
         fields = '__all__'
         widgets = {
-            'loja': forms.Select(attrs={
+            'estabelecimento': forms.Select(attrs={
                 'class': 'form-control'
             }),
-            'pergunta_texto': forms.Textarea(attrs={
+            'enquete_texto': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': '3'
             }),

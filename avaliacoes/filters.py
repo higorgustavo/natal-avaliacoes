@@ -9,12 +9,12 @@ OPCOES = (
 )
 
 
-class PerguntaFilter(django_filters.FilterSet):
-    isAtivo = django_filters.ChoiceFilter(choices=OPCOES)
+class EnqueteFilter(django_filters.FilterSet):
+    isAtiva = django_filters.ChoiceFilter(choices=OPCOES)
 
     class Meta:
-        model = Pergunta
-        fields = ['loja', 'isAtivo']
+        model = Enquente
+        fields = ['estabelecimento', 'isAtiva']
         # se quiser fazer virar o check
         # filter_overrides = {
         #     models.BooleanField: {

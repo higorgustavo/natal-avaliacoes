@@ -14,31 +14,43 @@
                 <h2 class="message">{{ message }}</h2>
             </div>
         {% endfor %}
-        <h4 class="titulo">Perguntas</h4>
+        <h4 class="titulo">Enquetes</h4>
         <div class="card lojas-cadastradas">
             <h4 class="card-header">
-                <a href="{% url 'cadastrar_pergunta' %}" class="btn btn-info">
-                    Adicionar Pergunta
+                <a href="{% url 'cadastrar_enquete' %}" class="btn btn-info">
+                    Adicionar Enquete
                 </a>
             </h4>
             <div class="card-body">
-                <form method="get">
-                    <h5>
-                       Loja: {% render_field pergunta_filter.form.loja|add_class:'form-control' %}
-                        Ativa: {% render_field pergunta_filter.form.isAtivo|add_class:'form-control' %}
-                    </h5>
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                <form method="get" class="filter-form">
+                    <div class="row">
+                        <div class="col-sm">
+                            <h6>
+                                {{ enquete_filter.form.estabelecimento.label_tag }}
+                                {% render_field enquete_filter.form.estabelecimento|add_class:'form-control' %}
+                            </h6>
+                        </div>
+                        <div class="col-sm-2">
+                            <h6>
+                                {{ enquete_filter.form.isAtiva.label_tag }}
+                                {% render_field enquete_filter.form.isAtiva|add_class:'form-control' %}
+                            </h6>
+                        </div>
+                        <div class="col-sm posi-button-filter">
+                            <button type="submit" class="btn btn-primary">Filtrar</button>
+                        </div>
+                    </div>
                 </form>
-                {% for pegunta in perguntas %}
+                {% for enquete in enquetes %}
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                            <h5>{{ pegunta.pergunta_texto }} | {{ pegunta.data_pergunta|date:"d/m/Y" }}
-                                <a href="{% url 'deletar_pergunta' pegunta.id %}">
+                            <h5>{{ enquete.enquete_texto }} | {{ enquete.data_enquete|date:"d/m/Y" }}
+                                <a href="{% url 'deletar_enquete' enquete.id %}">
                                     <span class="material-icons icon delete-color">
                                         delete
                                     </span>
                                 </a>
-                                <a href="{% url 'editar_pergunta' pegunta.id %}">
+                                <a href="{% url 'editar_enquete' enquete.id %}">
                                     <span class="material-icons icon edit-color">
                                         edit
                                     </span>

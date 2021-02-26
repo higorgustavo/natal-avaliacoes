@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Perguntas {% endblock %}
+
+{% block navbar %}
+    {% include 'components/_navbar.html' %}
+{% endblock %}
+
+{% block content %}
+    <h1 class="titulo">Perguntas - {{ estabelecimento.nome }}</h1>
+    {% for enquete in enquetes %}
+        <a href="{% url 'listar_alternativas' enquete.id %}">
+            <h3>{{ enquete.enquete_texto|upper }} | {{ enquete.data_enquete|date:"d/m/Y" }} </h3><br>
+        </a>
+    {% endfor %}
+{% endblock %}

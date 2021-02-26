@@ -2,15 +2,17 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('', listar_lojas, name='listar_lojas'),
-    path('loja/<int:id>/perguntas', listar_perguntas, name='listar_perguntas'),
-    path('pergunta/<int:id>/alternativas', listar_alternativas, name='listar_alternativas'),
+    path('', listar_estabeleciomentos, name='listar_estabeleciomentos'),
+    path('estabeleciomento/<int:id>/enquetes', listar_enquetes, name='listar_enquetes'),
+    path('enquete/<int:id>/alternativas', listar_alternativas, name='listar_alternativas'),
     path('voto/<int:id>/', votar, name='votar'),
 
     # CRUD
-    path('loja/', cadastrar_loja, name='cadastrar_loja'),
-    path('perguntas/', listar_perguntas_gerenciar, name='listar_perguntas_gerenciar'),
-    path('pergunta/add', cadastrar_pergunta, name='cadastrar_pergunta'),
-    path('pergunta/<int:id>/editar', editar_pergunta, name='editar_pergunta'),
-    path('pergunta/<int:id>/deletar', deletar_pergunta, name='deletar_pergunta'),
+    path('estabeleciomentos/', cadastrar_estabelecimento, name='cadastrar_estabelecimento'),
+    path('estabeleciomento/<int:id>/editar', editar_estabelecimento, name='editar_estabelecimento'),
+    path('estabeleciomento/<int:id>/deletar', deletar_estabelecimento, name='deletar_estabelecimento'),
+    path('enquetes/', gerenciar_lista_esquentes, name='gerenciar_lista_esquentes'),
+    path('enquete/add', cadastrar_enquete, name='cadastrar_enquete'),
+    path('enquete/<int:id>/editar', editar_enquete, name='editar_enquete'),
+    path('enquete/<int:id>/deletar', deletar_enquete, name='deletar_enquete'),
 ]

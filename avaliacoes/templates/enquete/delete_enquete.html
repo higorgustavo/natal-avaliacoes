@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block titulo %} Perguntas {% endblock %}
+{% block titulo %} Deletendo Enquete {% endblock %}
 
 {% block navbar %}
     {% include 'components/_navbar.html' %}
@@ -14,23 +14,16 @@
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <h5>
-                        Ação definitiva! Se optar por deletar a enquete "{{ pergunta.pergunta_texto }}"
+                        Ação definitiva! Se optar por deletar a enquete "{{ enquete.enquete_texto }}"
                         todos os resultados relacionados a ela também serão deletados!
                     </h5>
                     <div class="div-button">
                         <button type="submit" class="btn btn-danger">
                             Deletar
                         </button>
-                        <a class="btn btn-secondary" href="{% url 'listar_perguntas_gerenciar' %}">
+                        <a class="btn btn-secondary" href="{% url 'gerenciar_lista_esquentes' %}">
                             Cancelar
                         </a>
-                    </div>
-                    <div class="titulo">
-                        {% for message in messages %}
-                            <div class="alert alert-success" id="alert" role="alert">
-                                <h3 class="message">{{ message }}</h3>
-                            </div>
-                        {% endfor %}
                     </div>
                 </form>
             </div>

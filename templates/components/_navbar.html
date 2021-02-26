@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
-  <a class="navbar-brand mb-0 h1" href="{% url 'listar_lojas' %}">Natal</a>
+  <a class="navbar-brand mb-0 h1" href="{% url 'listar_estabeleciomentos' %}">Natal</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -7,15 +7,15 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-item nav-link" href="{% url 'listar_lojas' %}">Home</a>
+        <a class="nav-item nav-link" href="{% url 'listar_estabeleciomentos' %}">Home</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Gerenciar
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{% url 'cadastrar_loja' %}">Loja</a>
-          <a class="dropdown-item" href="{% url 'listar_perguntas_gerenciar' %}">Perguntas</a>
+          <a class="dropdown-item" href="{% url 'cadastrar_estabelecimento' %}">Estabeleciomentos</a>
+          <a class="dropdown-item" href="{% url 'gerenciar_lista_esquentes' %}">Enquetes</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>
         </div>

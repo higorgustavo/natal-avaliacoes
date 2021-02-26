@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Detetar Estabeleciomento {% endblock %}
+
+{% block navbar %}
+    {% include 'components/_navbar.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card lojas-cadastradas">
+            <h4 class="card-header">Atenção</h4>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h5>
+                        Ação definitiva! Se optar por deletar o Estabeleciomento "{{ estabelecimento.nome }}"
+                        todas as enquetes relacionados a ela também serão deletadas!
+                    </h5>
+                    <div class="div-button">
+                        <button type="submit" class="btn btn-danger">
+                            Deletar
+                        </button>
+                        <a class="btn btn-secondary" href="{% url 'cadastrar_estabelecimento' %}">
+                            Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
