@@ -4,6 +4,7 @@ from .forms import LojaForm, PerguntaForm, AlternativaForm
 from django.forms import inlineformset_factory
 from datetime import date
 from django.contrib import messages
+from .filters import PerguntaFilter
 
 
 def listar_lojas(request):
@@ -77,8 +78,11 @@ def cadastrar_loja(request):
 # Perguntas e Alternativas
 def listar_perguntas_gerenciar(request):
     perguntas = Pergunta.objects.all()
+    pergunta_filter = PerguntaFilter(request.GET, queryset=perguntas)
+    perguntas = pergunta_filter.qs
     context = {
-        'perguntas': perguntas
+        'perguntas': perguntas,
+        'pergunta_filter': pergunta_filter
     }
     return render(request, 'pergunta/list_perguntas.html', context)
 

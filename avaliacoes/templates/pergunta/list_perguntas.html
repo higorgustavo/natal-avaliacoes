@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 
 {% block titulo %} Perguntas {% endblock %}
 
@@ -21,6 +22,13 @@
                 </a>
             </h4>
             <div class="card-body">
+                <form method="get">
+                    <h5>
+                       Loja: {% render_field pergunta_filter.form.loja|add_class:'form-control' %}
+                        Ativa: {% render_field pergunta_filter.form.isAtivo|add_class:'form-control' %}
+                    </h5>
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                </form>
                 {% for pegunta in perguntas %}
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
