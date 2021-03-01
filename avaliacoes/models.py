@@ -12,14 +12,14 @@ class Enquente(models.Model):
     estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.CASCADE)
     enquete_texto = models.TextField(max_length=500, verbose_name="Enquete")
     isAtiva = models.BooleanField(default=True, verbose_name="Enquete Ativa")
-    data_enquete = models.DateField(auto_now=True)
+    data_enquete = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return str(self.id) + " | " + self.enquete_texto
 
     class Meta:
         verbose_name = "Enquete"
-        verbose_name_plural = "Enquete"
+        verbose_name_plural = "Enquetes"
         ordering = ['-data_enquete']
 
 

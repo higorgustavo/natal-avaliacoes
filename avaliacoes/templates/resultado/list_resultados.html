@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block titulo %} Resultados {% endblock %}
+
+{% block navbar %}
+    {% include 'components/_navbar.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card lojas-cadastradas">
+            <h4 class="card-header">Selecione a Enquete</h4>
+            <div class="card-body">
+                <form method="get" class="filter-form">
+                    <div class="row">
+                        <div class="col-sm">
+                            <h6>
+                                {{ enquete_filter.form.estabelecimento.label_tag }}
+                                {% render_field enquete_filter.form.estabelecimento|add_class:'form-control' %}
+                            </h6>
+                        </div>
+                        <div class="col-sm">
+                            <h6>
+                                {{ enquete_filter.form.enquete_texto.label_tag }}
+                                {% render_field enquete_filter.form.enquete_texto|add_class:'form-control' %}
+                            </h6>
+                        </div>
+                        <div class="col-sm posi-button-filter">
+                            <button type="submit" class="btn btn-primary">Filtrar</button>
+                        </div>
+                    </div>
+                </form>
+                {% for enquete in enquetes %}
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <h5>{{ enquete.enquete_texto|upper }}
+                                <a href="{% url 'resultado_enquete' enquete.id %}">
+                                    Visualizar Resultado
+                                </a>
+                            </h5>
+                        </li>
+                    </ul>
+                    <th></th>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

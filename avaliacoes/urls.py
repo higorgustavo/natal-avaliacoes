@@ -15,4 +15,8 @@ urlpatterns = [
     path('enquete/add', cadastrar_enquete, name='cadastrar_enquete'),
     path('enquete/<int:id>/editar', editar_enquete, name='editar_enquete'),
     path('enquete/<int:id>/deletar', deletar_enquete, name='deletar_enquete'),
+
+    # Resultados
+    path('resultados/', resultados, name='resultados'),
+    path('enquete/<int:id>/resultado', resultado_enquete, name='resultado_enquete'),
 ]

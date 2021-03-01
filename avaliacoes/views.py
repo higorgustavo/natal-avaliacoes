@@ -17,7 +17,7 @@ def listar_estabeleciomentos(request):
 
 def listar_enquetes(request, id):
     estabelecimento = Estabelecimento.objects.get(pk=id)
-    enquetes = Enquente.objects.filter(estabelecimento_id=estabelecimento.id)
+    enquetes = Enquente.objects.filter(estabelecimento_id=estabelecimento.id, isAtiva=True)
     context = {
         'estabelecimento': estabelecimento,
         'enquetes': enquetes
@@ -200,3 +200,25 @@ def deletar_enquete(request, id):
         'enquete': enquete
     }
     return render(request, 'enquete/delete_enquete.html', context)
+
+
+# Resultados
+def resultados(request):
+    enquetes = Enquente.objects.all().filter(isAtiva=True)
+    enquete_filter = EnqueteFilter(request.GET, queryset=enquetes)
+    enquetes = enquete_filter.qs
+    context = {
+        'enquetes': enquetes,
+        'enquete_filter': enquete_filter
+    }
+    return render(request, 'resultado/list_resultados.html', context)
+
+
+def resultado_enquete(request, id):
+    enquete = Enquente.objects.get(pk=id)
+    alternativas = Alternativa.objects.filter(enquete_id=enquete.id)
+    context = {
+        'enquete': enquete,
+        'alternativas': alternativas
+    }
+    return render(request, 'resultado/resultado_enquete.html', context)
