@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
+{% load my_tags %}
 
 {% block titulo %} Resultado - {{ enquete.enquete_texto }} {% endblock %}
 
@@ -13,8 +14,9 @@
             <h4 class="card-header">{{ enquete.enquete_texto|upper }}</h4>
             <div class="card-body">
                 {% for alternativa in alternativas %}
-                    <p>{{ alternativa.nome_alternativa }} - Votos: </p>
+                    <p>{{ alternativa.nome_alternativa }} - Votos: {{ alternativa.id|total_votos_alternativa }}</p>
                 {% endfor %}
+                <strong>Total de Votos: {{ enquete.id|total_votos }}</strong>
             </div>
         </div>
     </div>
