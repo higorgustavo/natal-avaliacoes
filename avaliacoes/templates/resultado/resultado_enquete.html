@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
-{% load my_tags %}
 
 {% block titulo %} Resultado - {{ enquete.enquete_texto }} {% endblock %}
 
@@ -13,10 +12,34 @@
         <div class="card lojas-cadastradas">
             <h4 class="card-header">{{ enquete.enquete_texto|upper }}</h4>
             <div class="card-body">
-                {% for alternativa in alternativas %}
-                    <p>{{ alternativa.nome_alternativa }} - Votos: {{ alternativa.id|total_votos_alternativa }}</p>
+                <form method="get" class="filter-form">
+                    <div class="row">
+                        <div class="col-sm">
+                            <h6>
+                                <label>Data Inicial:
+                                    <input class="form-control" name="data_inicial" type="date" value="{{ data_inicial }}"/>
+                                </label>
+                            </h6>
+                        </div>
+                        <div class="col-sm">
+                            <h6>
+                                <label>Data Final:
+                                    <input class="form-control" name="data_final" type="date" value="{{ data_final }}"/>
+                                </label>
+                            </h6>
+                        </div>
+                        <div class="col-sm posi-button-filter">
+                            <button type="submit" class="btn btn-primary">Filtrar por Datas</button>
+                        </div>
+                    </div>
+                </form>
+                {% for alternativa in votos_por_alternativa %}
+                    <p>
+                        <strong>{{ alternativa.alternativa__nome_alternativa}}</strong> - Votos:
+                        <strong>{{ alternativa.total_votos }}</strong>
+                    </p>
                 {% endfor %}
-                <strong>Total de Votos: {{ enquete.id|total_votos }}</strong>
+                <h5><strong>Total de Votos: {{ total_votos }}</strong></h5>
             </div>
         </div>
     </div>

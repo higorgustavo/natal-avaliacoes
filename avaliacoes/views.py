@@ -5,6 +5,7 @@ from django.forms import inlineformset_factory
 from datetime import date
 from django.contrib import messages
 from .filters import EnqueteFilter
+from django.db.models import Sum
 
 
 def listar_estabeleciomentos(request):
@@ -214,11 +215,46 @@ def resultados(request):
     return render(request, 'resultado/list_resultados.html', context)
 
 
+# def resultado_enquete(request, id):
+#     enquete = Enquente.objects.get(pk=id)
+#     alternativas = Alternativa.objects.filter(enquete_id=enquete.id)
+#     context = {
+#         'enquete': enquete,
+#         'alternativas': alternativas
+#     }
+#     return render(request, 'resultado/resultado_enquete.html', context)
+
+
 def resultado_enquete(request, id):
+    data_inicial = request.GET.get('data_inicial')
+    data_final = request.GET.get('data_final')
+
     enquete = Enquente.objects.get(pk=id)
     alternativas = Alternativa.objects.filter(enquete_id=enquete.id)
+
+    if data_inicial and data_final:
+        votos = Voto.objects.filter(alternativa__enquete=enquete.id, data_voto__range=[data_inicial, data_final])
+        total_votos = sum(votos.values_list('quant_votos', flat=True))
+        votos_por_alternativa = Voto.objects.values('alternativa__nome_alternativa').annotate(
+            total_votos=Sum('quant_votos')
+        ).filter(
+            alternativa__enquete=enquete.id, data_voto__range=[data_inicial, data_final]
+        )
+    else:
+        votos = Voto.objects.filter(alternativa__enquete=enquete.id)
+        total_votos = sum(votos.values_list('quant_votos', flat=True))
+        votos_por_alternativa = Voto.objects.values('alternativa__nome_alternativa').annotate(
+            total_votos=Sum('quant_votos')
+        ).filter(
+            alternativa__enquete=enquete.id
+        )
+
     context = {
         'enquete': enquete,
-        'alternativas': alternativas
+        'alternativas': alternativas,
+        'votos_por_alternativa': votos_por_alternativa,
+        'total_votos': total_votos,
+        'data_inicial': data_inicial,
+        'data_final': data_final
     }
     return render(request, 'resultado/resultado_enquete.html', context)

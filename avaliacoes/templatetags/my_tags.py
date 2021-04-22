@@ -3,6 +3,8 @@ from avaliacoes.models import Voto
 
 register = template.Library()
 
+# Tags inutilizadas
+
 
 @register.filter(name="total_votos")
 def total_votos(value):
