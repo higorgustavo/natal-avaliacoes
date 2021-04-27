@@ -7,10 +7,16 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="titulo">Estabeleciomentos</h1>
+    <h1 class="titulo-pesquisa">Estabeleciomentos</h1>
     {% for estabelecimento in estabeleciomentos %}
-        <a href="{% url 'listar_enquetes' estabelecimento.id %}">
-            <h3>{{ estabelecimento.nome }}</h3><br>
+        <a class="menus-enquete" href="{% url 'listar_enquetes' estabelecimento.id %}">
+            <div class="card">
+                <div class="card-body card-color">
+                    <h3 class="card-title btn-text">
+                        {{ estabelecimento.nome }}
+                    </h3>
+                </div>
+            </div><br>
         </a>
     {% endfor %}
 {% endblock %}

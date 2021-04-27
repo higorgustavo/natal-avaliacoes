@@ -215,16 +215,6 @@ def resultados(request):
     return render(request, 'resultado/list_resultados.html', context)
 
 
-# def resultado_enquete(request, id):
-#     enquete = Enquente.objects.get(pk=id)
-#     alternativas = Alternativa.objects.filter(enquete_id=enquete.id)
-#     context = {
-#         'enquete': enquete,
-#         'alternativas': alternativas
-#     }
-#     return render(request, 'resultado/resultado_enquete.html', context)
-
-
 def resultado_enquete(request, id):
     data_inicial = request.GET.get('data_inicial')
     data_final = request.GET.get('data_final')

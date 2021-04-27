@@ -1,16 +1,22 @@
 {% extends 'base.html' %}
 
-{% block titulo %} Perguntas {% endblock %}
+{% block titulo %} Enquetes {% endblock %}
 
 {% block navbar %}
     {% include 'components/_navbar.html' %}
 {% endblock %}
 
 {% block content %}
-    <h1 class="titulo">Perguntas - {{ estabelecimento.nome }}</h1>
+    <h1 class="titulo-pesquisa">Enquetes - {{ estabelecimento.nome }}</h1>
     {% for enquete in enquetes %}
-        <a href="{% url 'listar_alternativas' enquete.id %}">
-            <h3>{{ enquete.enquete_texto|upper }} | {{ enquete.data_enquete|date:"d/m/Y" }} </h3><br>
+        <a class="menus-enquete" href="{% url 'listar_alternativas' enquete.id %}">
+            <div class="card">
+                <div class="card-body card-color">
+                    <h4 class="card-title btn-text">
+                        {{ enquete.enquete_texto|upper }} | {{ enquete.data_enquete|date:"d/m/Y" }}
+                    </h4>
+                </div>
+            </div><br>
         </a>
     {% endfor %}
 {% endblock %}

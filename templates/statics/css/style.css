@@ -10,6 +10,10 @@ h1, h2, h3 {
     margin: 10px 0;
 }
 
+.titulo-pesquisa {
+    margin: 10px 0 35px 0;
+}
+
 .div-alternativas {
     text-align: center;
     border: solid 1px;
@@ -29,6 +33,10 @@ h1, h2, h3 {
 }
 
 a.link-voto:link {
+    text-decoration: none;
+}
+
+.menus-enquete:link {
     text-decoration: none;
 }
 
@@ -92,4 +100,18 @@ a.link-voto:link {
 
 .filter-form {
     margin-bottom: 20px;
+}
+
+.card-color {
+    background: #F5F5F5;
+}
+
+.card-color:hover {
+    background: #DCDCDC;
+    transition: all 150ms linear 0s;
+}
+
+.btn-text {
+    text-align: center;
+    color: black;
 }
