@@ -8,15 +8,30 @@
 
 {% block content %}
     <h1 class="titulo-pesquisa">Enquetes - {{ estabelecimento.nome }}</h1>
-    {% for enquete in enquetes %}
-        <a class="menus-enquete" href="{% url 'listar_alternativas' enquete.id %}">
+    {% if enquetes|length == 0 %}
+        <a class="menus-enquete" href="{% url 'cadastrar_enquete' %}">
             <div class="card">
                 <div class="card-body card-color">
                     <h4 class="card-title btn-text">
-                        {{ enquete.enquete_texto|upper }} | {{ enquete.data_enquete|date:"d/m/Y" }}
+                        Cadastrar Enquete
                     </h4>
                 </div>
-            </div><br>
+            </div>
+            <br>
         </a>
-    {% endfor %}
+    {% else %}
+        {% for enquete in enquetes %}
+            <a class="menus-enquete" href="{% url 'listar_alternativas' enquete.id %}">
+                <div class="card">
+                    <div class="card-body card-color">
+                        <h4 class="card-title btn-text">
+                            {{ enquete.enquete_texto|upper }} | {{ enquete.data_enquete|date:"d/m/Y" }}
+                        </h4>
+                    </div>
+                </div>
+                <br>
+            </a>
+        {% endfor %}
+    {% endif %}
+
 {% endblock %}

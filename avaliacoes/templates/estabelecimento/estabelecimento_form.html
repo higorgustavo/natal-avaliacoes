@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-sm">
                 <div class="card lojas-cadastradas">
-                    <h4 class="card-header">Novo Estabeleciomento</h4>
+                    <h4 class="card-header">Novo Estabelecimento</h4>
                     <div class="card-body">
                         <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
@@ -37,7 +37,7 @@
             </div>
             <div class="col-sm">
                 <div class="card lojas-cadastradas">
-                    <h4 class="card-header">Estabeleciomentos Cadastradas</h4>
+                    <h4 class="card-header">Estabelecimentos Cadastrados</h4>
                     <div class="card-body">
                         {% for estabelecimento in estabelecimentos %}
                             <ul class="list-group list-group-flush">

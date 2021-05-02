@@ -7,16 +7,30 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="titulo-pesquisa">Estabeleciomentos</h1>
-    {% for estabelecimento in estabeleciomentos %}
-        <a class="menus-enquete" href="{% url 'listar_enquetes' estabelecimento.id %}">
+    <h1 class="titulo-pesquisa">Estabelecimentos</h1>
+    {% if estabeleciomentos|length == 0 %}
+        <a class="menus-enquete" href="{% url 'cadastrar_estabelecimento' %}">
             <div class="card">
                 <div class="card-body card-color">
                     <h3 class="card-title btn-text">
-                        {{ estabelecimento.nome }}
+                        Cadastrar Estabelecimento
                     </h3>
                 </div>
-            </div><br>
+            </div>
+            <br>
         </a>
-    {% endfor %}
+    {% else %}
+        {% for estabelecimento in estabeleciomentos %}
+            <a class="menus-enquete" href="{% url 'listar_enquetes' estabelecimento.id %}">
+                <div class="card">
+                    <div class="card-body card-color">
+                        <h3 class="card-title btn-text">
+                            {{ estabelecimento.nome }}
+                        </h3>
+                    </div>
+                </div>
+                <br>
+            </a>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
